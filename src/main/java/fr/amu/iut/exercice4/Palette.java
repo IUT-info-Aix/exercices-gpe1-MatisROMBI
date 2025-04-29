@@ -6,11 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 public class Palette extends Application {
 
@@ -31,11 +31,11 @@ public class Palette extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Définition des paramètres de la fenêtre
         Parameters params = getParameters();
-        int width = 600;
-        int height = 400;
+        int width = 400;
+        int height = 200;
 
         // création d'une scène
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         Scene scene = new Scene(root, width, height);
 
         //Défintion de la scène principale
@@ -56,9 +56,18 @@ public class Palette extends Application {
         root.setBottom(RGB);
         RGB.setAlignment(Pos.CENTER);
 
+        //EventHandler qui permettent de changer la couleur de fond
+        vert.setOnAction(e -> changerBackgroudColor(Color.GREEN));
+        rouge.setOnAction(e -> changerBackgroudColor(Color.RED));
+        bleu.setOnAction(e -> changerBackgroudColor(Color.BLUE));
 
         // Affichage de la fenêtre
         primaryStage.show();
+    }
+
+    //Méthode pour changer la couleur de fond
+    private void changerBackgroudColor(Color color) {
+        root.setBackground(new Background(new BackgroundFill(color, null, null)));
     }
 }
 
