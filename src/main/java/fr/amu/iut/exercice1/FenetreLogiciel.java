@@ -101,10 +101,10 @@ public class FenetreLogiciel extends Application {
         Button cancel = new Button("Cancel");
 
         // Ajout des éléments du centre dans centre
-        GridPane centre = new GridPane(name, nameText, email, emailText, password, passwordText, submit, cancel);
+       // GridPane centre = new GridPane(name, nameText, email, emailText, password, passwordText, submit, cancel);
 
         // Ajout de centre au centre
-        fenetre.setCenter(centre);
+        // fenetre.setCenter(centre);
 
         // Affichage de la fenêtre
         primaryStage.show();
