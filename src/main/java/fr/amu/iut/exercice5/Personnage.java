@@ -54,6 +54,13 @@ class Personnage extends Group {
         //  *   |   *
         //   *  |  *
         //    *****
+        // déplacement bas
+        if (getLayoutY() < hauteurJeu - LARGEUR_PERSONNAGE) {
+            setLayoutY(getLayoutY() + LARGEUR_PERSONNAGE);
+        }
+        if (!direction.equals("bas")) {
+            direction = "bas";
+        }
 
     }
 
@@ -63,6 +70,13 @@ class Personnage extends Group {
         //  *   |   *
         //   *     *
         //    *****
+        // déplacement haut
+        if (getLayoutY() >= LARGEUR_PERSONNAGE) {
+            setLayoutY(getLayoutY() - LARGEUR_PERSONNAGE);
+        }
+        if (!direction.equals("haut")) {
+            direction = "haut";
+        }
 
     }
 
