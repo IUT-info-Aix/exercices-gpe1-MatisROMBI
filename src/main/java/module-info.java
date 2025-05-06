@@ -10,6 +10,8 @@
     exports com.example.partie3;
     opens fr.amu.iut.exercice7 to javafx.fxml;
     exports fr.amu.iut.exercice7;
+    opens fr.amu.iut.exercice8 to javafx.fxml;
+    exports fr.amu.iut.exercice8;
 
 }
 
