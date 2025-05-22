@@ -1,6 +1,9 @@
-package fr.amu.iut.exercice1;
+package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,15 +17,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-@SuppressWarnings("Duplicates")
 public class Palette extends Application {
 
-    private int nbVert = 0;
-    private int nbRouge = 0;
-    private int nbBleu = 0;
+    // propriétés dynamiques
+    private final IntegerProperty nbFois = new SimpleIntegerProperty(0);
+    private final StringProperty message = new SimpleStringProperty("");
+    private final StringProperty couleurPanneau = new SimpleStringProperty("#000000");
 
     private Label texteDuHaut;
-
+    private Label texteDuBas;
     private Button vert;
     private Button rouge;
     private Button bleu;
@@ -30,9 +33,6 @@ public class Palette extends Application {
     private BorderPane root;
     private Pane panneau;
     private HBox boutons;
-
-    private Label texteDuBas;
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -49,26 +49,61 @@ public class Palette extends Application {
         boutons = new HBox(10);
         boutons.setAlignment(Pos.CENTER);
         boutons.setPadding(new Insets(10, 5, 10, 5));
+
         texteDuBas = new Label();
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
 
+        // création des boutons
         vert = new Button("Vert");
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
 
-        /* VOTRE CODE ICI */
+        // événements
+        vert.setOnAction(event -> handleButtonClick("Vert", "#00FF00"));
+        rouge.setOnAction(event -> handleButtonClick("Rouge", "#FF0000"));
+        bleu.setOnAction(event -> handleButtonClick("Bleu", "#0000FF"));
 
+        // assemblage
         boutons.getChildren().addAll(vert, rouge, bleu);
-
         root.setCenter(panneau);
         root.setTop(texteDuHaut);
         root.setBottom(bas);
 
-        Scene scene = new Scene(root);
+        // lier les propriétés
+        createBindings();
 
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Palette de Couleurs");
         primaryStage.show();
     }
-}
 
+    private void handleButtonClick(String nomCouleur, String couleurHex) {
+        nbFois.set(nbFois.get() + 1);
+        message.set("Le " + nomCouleur + " est une jolie couleur !");
+        couleurPanneau.set(couleurHex);
+    }
+
+    private void createBindings() {
+        // Binding conditionnel pour texte du haut
+        BooleanBinding pasEncoreDeClic = Bindings.equal(nbFois, 0);
+
+        texteDuHaut.textProperty().bind(
+                Bindings.when(pasEncoreDeClic)
+                        .then("Cliquez sur un bouton.")
+                        .otherwise(Bindings.concat("Nombre de clics : ", nbFois.asString()))
+        );
+
+        // Binding du fond du panneau
+        panneau.styleProperty().bind(
+                Bindings.concat("-fx-background-color: ", couleurPanneau)
+        );
+
+        // texte du bas : texte et couleur dynamiques
+        texteDuBas.textProperty().bind(message);
+        texteDuBas.styleProperty().bind(
+                Bindings.concat("-fx-text-fill: ", couleurPanneau)
+        );
+    }
+}

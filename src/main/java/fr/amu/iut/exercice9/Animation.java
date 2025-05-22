@@ -1,19 +1,21 @@
 package fr.amu.iut.exercice9;
 
+import fr.amu.iut.exercice12.CustomButton;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Animation extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
-        CustomButton customButton = new CustomButton();
+        CustomButton customButton = new CustomButton("Bouton", Color.BEIGE); // Correction ici
         root.setCenter(customButton);
         Scene scene = new Scene(root, 400, 400);
 
@@ -40,7 +42,6 @@ public class Animation extends Application {
         transition5.setByY(-150);
 
         // Transition inverse
-
         TranslateTransition transition6 = new TranslateTransition(duration, customButton);
         transition6.setByX(150);
         transition6.setByY(150);
@@ -61,8 +62,10 @@ public class Animation extends Application {
         transition10.setByX(-150);
         transition10.setByY(150);
 
-
-        SequentialTransition st = new SequentialTransition(transition1, transition2, transition3, transition4, transition5, transition6, transition7, transition8, transition9, transition10);
+        SequentialTransition st = new SequentialTransition(
+                transition1, transition2, transition3, transition4, transition5,
+                transition6, transition7, transition8, transition9, transition10
+        );
 
         // Jouer toute la séquence lors d'un clic de souris
         customButton.setOnMousePressed(mouseEvent -> st.play());
@@ -71,7 +74,6 @@ public class Animation extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         Application.launch(args);
