@@ -33,6 +33,8 @@
     opens fr.amu.iut.exercice15 to javafx.fxml;
     exports fr.amu.iut.exercice15;
     exports fr.amu.iut.exercice16;
+    opens fr.amu.iut.exercice17 to javafx.fxml;
+    exports fr.amu.iut.exercice17;
 
 }
 
